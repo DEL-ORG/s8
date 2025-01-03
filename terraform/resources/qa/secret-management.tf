@@ -14,7 +14,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "danie-s3-bucket"
-    key            = "prod-secret_manager/terraform.tfstate"
+    key            = "qa-secret_manager/terraform.tfstate"
     region         = "us-east-2"
     dynamodb_table = "danie-s3-bucket-lock"
   }
