@@ -34,7 +34,7 @@ terraform {
 }
 
 module "secret-manager" {
-    source        = "../../../modules/secret-manager"
+    source        = "../../../modules/aws-secret-manager"
     aws_region      = local.aws_region   
     secret_names    = local.secret_names 
     tags            = local.tags         
