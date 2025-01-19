@@ -1,12 +1,11 @@
-data "aws_subnet" "private_subnet" {
-   count = lookup(var.subnet_count, var.tags.environment)
-
+data "aws_subnets" "private_subnets" {
   filter {
     name   = "tag:Name"
-    values = [format("%s-%s-private-subnet-%d", var.tags["environment"], var.tags["project"], count.index + 1)]
+    values = [format("%s-%s-private-subnet-1", var.tags["environment"], var.tags["project"]),
+    format("%s-%s-private-subnet-2", var.tags["environment"], var.tags["project"]),
+    format("%s-%s-private-subnet-3", var.tags["environment"], var.tags["project"])]
   }
 }
-
 #ssh -i jenkins-keypair.pem ubuntu@10.20.101.154   cd ..
 
 data "aws_vpc" "my_vpc" {
@@ -18,6 +17,14 @@ data "aws_vpc" "my_vpc" {
 
 output "aws_vpc_id" {
   value = data.aws_vpc.my_vpc.id
+}
+
+data "aws_ami" "sonar_ami" {
+  most_recent = true
+  filter {
+    name   = "tag:Name"
+    values = ["sonar-server"]  # Replace with your AMI name pattern
+  }
 }
 
 data "aws_security_group" "bastion-sg" {
@@ -42,3 +49,7 @@ data "aws_lb_target_group" "SonarTG"   {
 data "aws_lb" "ALB" {
     name = format("%s-ALB", var.tags["environment"])
   }
+data "aws_route53_zone" "kendanZone_id" {
+  name         = "kendanbeauty.com" 
+  private_zone = false      
+}

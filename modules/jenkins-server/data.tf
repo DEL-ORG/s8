@@ -7,12 +7,13 @@ data "aws_subnets" "private_subnets" {
   }
 }
 
-# data "aws_subnet" "private_subnet2" {
-#   filter {
-#     name   = "tag:Name"
-#     values = [format("%s-%s-private-subnet-2", var.tags["environment"], var.tags["project"])]
-#   }
-# }
+data "aws_ami" "custom_ami" {
+  most_recent = true
+  filter {
+    name   = "tag:Name"
+    values = ["Jenkins_server"]  # Replace with your AMI name pattern
+  }
+}
 
 #ssh -i jenkins-keypair.pem ubuntu@10.20.101.154   cd ..
 
@@ -49,3 +50,8 @@ data "aws_lb_target_group" "JenkinsTG"   {
 data "aws_lb" "ALB" {
     name = format("%s-ALB", var.tags["environment"])
   }
+
+data "aws_route53_zone" "kendanZone_id" {
+  name         = "kendanbeauty.com" 
+  private_zone = false      
+}

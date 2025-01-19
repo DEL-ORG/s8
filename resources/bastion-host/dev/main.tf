@@ -39,6 +39,6 @@ module "bastion_host" {
     ami           = local.ami           
     instance_type = local.instance_type 
     region        = local.region        
-    key_name      = local.key_name      
+    key_name      = local.key_name 
     tags          = local.tags 
 }

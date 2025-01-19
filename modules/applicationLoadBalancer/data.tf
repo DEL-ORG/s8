@@ -20,3 +20,10 @@ data "aws_vpc" "my_vpc" {
 output "aws_vpc_id" {
   value = data.aws_vpc.my_vpc.id
 }
+
+data "aws_secretsmanager_secret" "kendan_certificate" {
+  name        = "KendanCertificate_arn"
+  }
+data "aws_secretsmanager_secret_version" "kendan_certificate" {
+  secret_id = data.aws_secretsmanager_secret.kendan_certificate.id
+}

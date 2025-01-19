@@ -13,32 +13,54 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "danie-s3-bucket"
-    key            = "prod-JenkinsServer/terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "danie-s3-bucket-lock"
+    bucket                   = "danie-s3-bucket"
+    key                      = "prod-jenkinsServer/terraform.tfstate"
+    region                   = "us-east-2"
+    dynamodb_table           = "danie-s3-bucket-lock"
   }
 }
  locals  {
-    ami                    = "ami-01c1c1c9c0165ad21"
-    instance_type          = "t2.small"
-    region                 =  "us-east-2"
-    key_name               = "jenkins-keypair" 
+    instance_type             = "t2.small"
+    region                    =  "us-east-2"
+    key_name                  = "jenkins-keypair" 
+    desired_capacity          = 1
+    min_size                  = 1
+    max_size                  = 5
+    health_check_type         = "EC2"
+    health_check_grace_period = 300
+    ttl                       = 300
+    scaleUp = {
+        scaling_adjustment    = "1"
+        adjustment_type       = "ChangeInCapacity"
+        cooldown              = "300"
+    }
+    scaleDown = {
+        scaling_adjustment    = "-1"
+        adjustment_type       = "ChangeInCapacity"
+        cooldown              = "300"
+    }
     tags =  {
-      "owner"          = "danniella kitio"
-      "teams"          = "DevOps"
-      "environment"    = "prod"
-      "project"        = "doityourself"
-      "create_by"      = "danniella"
-      "cloud_provider" = "aws"
+      "owner"                 = "danniella kitio"
+      "teams"                 = "DevOps"
+      "environment"           = "prod"
+      "project"               = "doityourself"
+      "create_by"             = "danniella"
+      "cloud_provider"        = "aws"
     }
 }
 
 module "jenkinsServer" {
-    source        = "../../../modules/jenkins-server"
-    ami           = local.ami           
-    instance_type = local.instance_type 
-    region        = local.region        
-    key_name      = local.key_name      
-    tags          = local.tags 
+    source                     = "../../../modules/jenkins-server"        
+    instance_type              = local.instance_type 
+    region                     = local.region        
+    key_name                   = local.key_name  
+    desired_capacity           = local.desired_capacity         
+    min_size                   = local.min_size                 
+    max_size                   = local.max_size                 
+    health_check_type          = local.health_check_type        
+    health_check_grace_period  = local.health_check_grace_period    
+    tags                       = local.tags 
+    scaleUp                    = local.scaleUp
+    scaleDown                  = local.scaleDown
+    ttl                        = local.ttl
 }

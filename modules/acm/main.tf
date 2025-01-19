@@ -6,7 +6,7 @@ resource "aws_acm_certificate" "acm_certificate" {
     create_before_destroy = true
   }
   tags = merge(var.tags, {
-    Name = format("%s-certificate", var.tags ["compagny"])
+    Name = format("%s-kendan_certificate", var.tags ["compagny"])
   }
   )
 }
@@ -23,7 +23,7 @@ resource "aws_route53_record" "route53_record" {
   allow_overwrite = true
   name            = each.value.name
   records         = [each.value.record]
-  ttl             = 60
+  ttl             = var.ttl
   type            = each.value.type
   zone_id         = data.aws_route53_zone.route53_zone.zone_id
 }

@@ -26,7 +26,7 @@ resource "aws_lb_listener" "https_listener" {
   protocol          = "HTTPS"
 
   ssl_policy      = "ELBSecurityPolicy-2016-08"
-  certificate_arn = "arn:aws:acm:us-east-2:074842358617:certificate/53456ca5-9b11-454e-93ae-b9c4e8ef40dd"
+  certificate_arn = jsondecode(data.aws_secretsmanager_secret_version.kendan_certificate.secret_string)["KendanCertificate_arn"]
 
   #   Default action (should only be applied if no rules match)
   default_action {
@@ -42,7 +42,7 @@ resource "aws_lb_listener_rule" "jenkinsServer" {
 
   condition {
     host_header {
-      values = ["jenkins.kendanbeauty.com"]
+      values = [format("%sjenkins.kendanbeauty.com", var.tags["environment"])]
     }
   }
 
@@ -58,7 +58,7 @@ resource "aws_lb_listener_rule" "SonarServer" {
 
   condition {
     host_header {
-      values = ["sonarqube.kendanbeauty.com"]
+      values = [format("%ssonar.kendanbeauty.com", var.tags["environment"])]
     }
   }
 

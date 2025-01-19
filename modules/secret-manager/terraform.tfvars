@@ -1,5 +1,7 @@
 #  aws_region = "us-east-2"
-#  secret_names = [format("%s-%s-DB_USERNAME", var.tags["environment"], var.tags["project"]) , format("%s-%s-DB_PASSWORD", var.tags["environment"], var.tags["project"])]
+#  secret_names = [format("%s-%s-dbUsername", var.tags["environment"], var.tags["project"]) , 
+ #                  format("%s-%s-dbPassword", var.tags["environment"], var.tags["project"]),
+ #                  "KendanCertificate_arn"]
 #  tags =  {
 #    Name            =  each.key 
 #    owner           = "danniella kitio"

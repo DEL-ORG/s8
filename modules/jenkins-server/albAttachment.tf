@@ -5,10 +5,10 @@
 # }
 
 resource "aws_route53_record" "jenkins_cname" {
-  zone_id = "Z0699124QZYV2PLKNVKR"
-  name    = "jenkins.kendanbeauty.com"
+  zone_id = data.aws_route53_zone.kendanZone_id.zone_id
+  name    = format("%sjenkins.kendanbeauty.com", var.tags["environment"])
   type    = "CNAME"
-  ttl     = 300
+  ttl     = var.ttl
   records = [data.aws_lb.ALB.dns_name]
 }
 

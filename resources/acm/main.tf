@@ -25,6 +25,7 @@ locals {
     region                    = "us-east-2"
     subject_alternative_names = "*.kendanbeauty.com"
     domain_name               = "kendanbeauty.com"
+    ttl                       = 60
     tags                        =  {
     "owner"          = "danniella kitio"
     "teams"          = "DevOps"
@@ -40,6 +41,7 @@ module "acm" {
     source = "../../modules/acm"
     region                     = local.region                   
     subject_alternative_names  = local.subject_alternative_names
-    domain_name                = local.domain_name              
+    domain_name                = local.domain_name  
+    ttl                        = local.ttl            
     tags                       = local.tags  
 }                   

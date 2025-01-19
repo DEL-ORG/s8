@@ -15,3 +15,6 @@ variable "subject_alternative_names" {
   type = string
 }
 
+variable "ttl" {
+  type = number
+}

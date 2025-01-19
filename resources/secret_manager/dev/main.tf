@@ -14,22 +14,22 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "danie-s3-bucket"
-    key            = "dev-secret_manager/terraform.tfstate"
+    key            = "devSecretManager/terraform.tfstate"
     region         = "us-east-2"
     dynamodb_table = "danie-s3-bucket-lock"
   }
 }
  locals  {
     aws_region      = "us-east-2"
-    secret_names    = [format("%s-%s-DB_USERNAME1", local.tags["environment"], local.tags["project"]) , format("%s-%s-DB_PASSWORD1", local.tags["environment"], local.tags["project"])]
+    secret_names    = [format("%s-%s-dbUsername", local.tags["environment"], local.tags["project"]) , format("%s-%s-dbPassword", local.tags["environment"], local.tags["project"]), "KendanCertificate_arn"]
     tags            =  {
-    #Name            =  each.key 
-    owner           = "danniella kitio"
-    teams           = "DevOps"
-    environment     = "dev"
-    project         = "doityourself"
-    create_by       = "danniella"
-    cloud_provider  = "aws"
+      #Name            =  each.key 
+      owner           = "danniella kitio"
+      teams           = "DevOps"
+      environment     = "dev"
+      project         = "doityourself"
+      create_by       = "danniella"
+      cloud_provider  = "aws"
     }
 }
 

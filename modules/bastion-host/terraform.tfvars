@@ -2,7 +2,6 @@
 # instance_type          = "t2.small"
 # region                 =  "us-east-2"
 # key_name               = "jenkins-keypair"
-
 # tags =  {
 #   "owner"          = "danniella kitio"
 #   "teams"          = "DevOps"

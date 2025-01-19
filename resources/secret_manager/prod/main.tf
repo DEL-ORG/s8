@@ -14,23 +14,23 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "danie-s3-bucket"
-    key            = "prod-secret_manager/terraform.tfstate"
+    key            = "prodSecretManager/terraform.tfstate"
     region         = "us-east-2"
     dynamodb_table = "danie-s3-bucket-lock"
   }
 }
  locals  {
     aws_region      = "us-east-2"
-    secret_names    = [format("%s-%s-DB_USERNAME", local.tags["environment"], local.tags["project"]) , format("%s-%s-DB_PASSWORD", local.tags["environment"], local.tags["project"])]
+    secret_names    = [format("%s-%s-dbUsername", local.tags["environment"], local.tags["project"]) , format("%s-%s-dbPassword", local.tags["environment"], local.tags["project"]),]
     tags            =  {
-      # Name            =  each.key 
-      owner           = "danniella kitio"
-      teams           = "DevOps"
-      environment     = "prod"
-      project         = "doityourself"
-      create_by       = "danniella"
-      cloud_provider  = "aws"
-      }
+    #Name            =  each.key 
+    owner           = "danniella kitio"
+    teams           = "DevOps"
+    environment     = "prod"
+    project         = "doityourself"
+    create_by       = "danniella"
+    cloud_provider  = "aws"
+    }
 }
 
 module "secret-manager" {

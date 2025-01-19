@@ -40,22 +40,3 @@ resource "aws_lb_target_group" "SonarTG" {
  )
 }
 
-# resource "aws_lb_target_group" "yellow" {
-#   name        = "yellow-tg"
-#   port        = 80
-#   protocol    = "HTTP"
-#   vpc_id      = data.aws_vpc.my_vpc.id 
-#   target_type = "instance"
-
-#   health_check {
-#     path                = "/"
-#     interval            = 30
-#     timeout             = 5
-#     healthy_threshold   = 2
-#     unhealthy_threshold = 2
-#   }
-
-#   tags = {
-#     Name = "yellow-tg"
-#   }
-# }
